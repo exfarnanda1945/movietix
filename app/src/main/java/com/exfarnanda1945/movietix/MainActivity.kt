@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
 import com.exfarnanda1945.movietix.home.HomeScreen
 import com.exfarnanda1945.movietix.ui.theme.MovieTixTheme
 import org.koin.androidx.compose.KoinAndroidContext
