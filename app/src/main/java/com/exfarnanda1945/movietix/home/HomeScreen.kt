@@ -32,6 +32,7 @@ import com.exfarnanda1945.movietix.R
 import com.exfarnanda1945.movietix.home.banner.presentation.BannerScreen
 import com.exfarnanda1945.movietix.home.shared_discovery_film.presentation.DiscoveryFilmScreen
 import com.exfarnanda1945.movietix.home.top_genre.presentation.TopGenreScreen
+import com.exfarnanda1945.movietix.home.top_rated.presentation.TopRatedFilmScreen
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
@@ -40,7 +41,8 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         Column(
             modifier = modifier
                 .fillMaxSize()
-                .padding(padding).verticalScroll(scrollState)
+                .padding(padding)
+                .verticalScroll(scrollState)
         ) {
             Row(
                 modifier = Modifier
@@ -85,10 +87,10 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             BannerScreen()
             TopGenreScreen()
             Spacer(modifier = Modifier.height(15.dp))
+            TopRatedFilmScreen()
+            Spacer(modifier = Modifier.height(15.dp))
             DiscoveryFilmScreen("Best Indonesia Film")
-            Spacer(modifier = Modifier.height(10.dp))
-            DiscoveryFilmScreen("Best Horror")
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(15.dp))
             DiscoveryFilmScreen("Documentary")
         }
     }
