@@ -72,4 +72,9 @@ dependencies {
     implementation(libs.moshi)
 
     implementation(libs.glide.compose)
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.androidx.compose.navigation)
 }
