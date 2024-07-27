@@ -1,7 +1,6 @@
-package com.exfarnanda1945.movietix.home.banner.remote
+package com.exfarnanda1945.movietix.home.banner.service
 
 import android.util.Log
-import com.exfarnanda1945.movietix.home.banner.remote.models.BannerResultItemResponse
 import com.exfarnanda1945.movietix.home.banner.repository.BadRequestException
 import com.exfarnanda1945.movietix.home.banner.repository.BannerRemote
 import com.exfarnanda1945.movietix.home.banner.repository.BannerRemoteResult

@@ -1,6 +1,5 @@
-package com.exfarnanda1945.movietix.home.banner.remote
+package com.exfarnanda1945.movietix.home.banner.service
 
-import com.exfarnanda1945.movietix.home.banner.remote.models.BannerResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
