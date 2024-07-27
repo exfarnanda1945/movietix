@@ -85,6 +85,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.height(10.dp))
             BannerScreen()
+            Spacer(modifier = Modifier.height(10.dp))
             TopGenreScreen()
             Spacer(modifier = Modifier.height(15.dp))
             TopRatedFilmScreen()
