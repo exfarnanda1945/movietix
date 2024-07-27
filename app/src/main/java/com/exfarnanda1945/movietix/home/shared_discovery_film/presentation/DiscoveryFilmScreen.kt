@@ -40,7 +40,7 @@ fun DiscoveryFilmScreen(title: String, modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(10.dp))
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround,
+            horizontalArrangement = Arrangement.SpaceEvenly,
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             (1..4).forEach { _ ->
