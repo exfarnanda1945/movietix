@@ -1,5 +1,6 @@
 package com.exfarnanda1945.movietix.home.banner.domain
 
+import com.exfarnanda1945.movietix.core.domain.DomainResult
 import java.lang.Exception
 
 data class Banner(
@@ -8,14 +9,5 @@ data class Banner(
     val image: String
 )
 
-sealed class BannerResult {
-    data class Success(val banner: List<Banner>) : BannerResult()
-    data class Failure(val exception: Exception) : BannerResult()
-}
 
-class UnauthorizedError : Exception()
-class BadRequestError : Exception()
-class InternalServerError : Exception()
-class NotFoundError : Exception()
-class ConnectivityError : Exception()
-class UnExpectedError : Exception()
+typealias BannerResult = DomainResult<List<Banner>, Exception>
