@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.flow
 
 class GetDiscoveryFilmUseCaseImpl(private val remote: GetDiscoveryFilmRemoteRepository) :
     GetDiscoveryFilmUseCase {
-    override fun get(genreId: Int): Flow<DiscoveryFilmResult> = flow {
-        remote.get(genreId).collect { result ->
+    override fun get(genreId: Int?, originCountry: String?): Flow<DiscoveryFilmResult> = flow {
+        remote.get(genreId = genreId, originCountry = originCountry).collect { result ->
             when (result) {
                 is RepositoryResult.Failure -> {
                     val exception = domainExceptionMapper(result.exception)
