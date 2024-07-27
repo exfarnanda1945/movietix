@@ -5,8 +5,10 @@ import com.exfarnanda1945.movietix.core.repository.repositoryExceptionMapper
 import com.exfarnanda1945.movietix.home.top_genre.repository.GenreRemote
 import com.exfarnanda1945.movietix.home.top_genre.repository.GenreRemoteResult
 import com.exfarnanda1945.movietix.home.top_genre.repository.GetGenreRemoteRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class GetGenreRemoteRepositoryImpl(private val service: GetGenreService) :
     GetGenreRemoteRepository {
@@ -22,7 +24,7 @@ class GetGenreRemoteRepositoryImpl(private val service: GetGenreService) :
                 repositoryExceptionMapper(exception = e, tagException = "GetGenreRemoteRepository")
             emit(RepositoryResult.Failure(result))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
 
     private fun GenresItem.toRemoteResult(): GenreRemote = GenreRemote(
