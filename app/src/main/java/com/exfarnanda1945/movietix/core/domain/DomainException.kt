@@ -16,7 +16,7 @@ class NotFoundError : Exception()
 class ConnectivityError : Exception()
 class UnExpectedError : Exception()
 
-fun domainExceptionMapping(exception: Exception) = when (exception) {
+fun domainExceptionMapper(exception: Exception) = when (exception) {
     is UnauthorizedException -> UnauthorizedError()
     is ConnectivityErrorException -> ConnectivityError()
     is BadRequestException -> BadRequestError()
