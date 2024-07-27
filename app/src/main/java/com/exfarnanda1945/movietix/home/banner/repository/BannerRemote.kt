@@ -1,6 +1,6 @@
 package com.exfarnanda1945.movietix.home.banner.repository
 
-import java.lang.Exception
+import com.exfarnanda1945.movietix.core.repository.RepositoryResult
 
 data class BannerRemote(
     val movieId: Int,
@@ -8,7 +8,4 @@ data class BannerRemote(
     val image: String
 )
 
-sealed class BannerRemoteResult {
-    data class Success(val banner: List<BannerRemote>) : BannerRemoteResult()
-    data class Failure(val exception: Exception) : BannerRemoteResult()
-}
+typealias BannerRemoteResult = RepositoryResult<List<BannerRemote>, Exception>
