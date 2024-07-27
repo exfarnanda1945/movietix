@@ -19,11 +19,11 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun TopGenreScreen(modifier: Modifier = Modifier) {
-    Column {
+    Column(modifier) {
         Text(
             text = "Top Categories", style = TextStyle(
                 fontSize = 16.sp, fontWeight = FontWeight.Bold
-            ), modifier = Modifier.padding(10.dp)
+            ), modifier = Modifier.padding(start = 10.dp, bottom = 10.dp)
         )
         Row(
             modifier = Modifier
