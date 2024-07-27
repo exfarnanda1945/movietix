@@ -11,7 +11,6 @@ import com.exfarnanda1945.movietix.core.domain.UnExpectedError
 import com.exfarnanda1945.movietix.core.domain.UnauthorizedError
 import com.exfarnanda1945.movietix.home.top_genre.domain.Genre
 import com.exfarnanda1945.movietix.home.top_genre.domain.GetGenresUseCase
-import com.exfarnanda1945.movietix.home.top_rated.domain.GetTopRatedFilmUseCase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
