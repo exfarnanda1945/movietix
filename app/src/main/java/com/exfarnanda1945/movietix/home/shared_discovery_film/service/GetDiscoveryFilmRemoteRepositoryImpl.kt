@@ -10,17 +10,18 @@ import kotlinx.coroutines.flow.flow
 
 class GetDiscoveryFilmRemoteRepositoryImpl(private val service: GetDiscoveryFilmService) :
     GetDiscoveryFilmRemoteRepository {
-    override fun get(genreId: Int): Flow<DiscoveryFilmRemoteResult> = flow {
-        try {
-            val result = service.get(genreId)
-            emit(
-                RepositoryResult.Success(result.results.map { it.toRemoteResult() })
-            )
-        } catch (e: Exception) {
-            val exception = repositoryExceptionMapper(e, " GetDiscoveryFilmRemoteRepository ")
-            emit(RepositoryResult.Failure(exception))
+    override fun get(genreId: Int?, originCountry: String?): Flow<DiscoveryFilmRemoteResult> =
+        flow {
+            try {
+                val result = service.get(genreId = genreId, originCountry = originCountry)
+                emit(
+                    RepositoryResult.Success(result.results.map { it.toRemoteResult() })
+                )
+            } catch (e: Exception) {
+                val exception = repositoryExceptionMapper(e, " GetDiscoveryFilmRemoteRepository ")
+                emit(RepositoryResult.Failure(exception))
+            }
         }
-    }
 
     private fun DiscoveryFilmResultsItem.toRemoteResult() = DiscoveryFilmRemote(
         title = this.title,
