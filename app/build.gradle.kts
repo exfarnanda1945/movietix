@@ -66,12 +66,15 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     implementation(libs.retrofit)
     implementation(libs.converter.moshi)
-    implementation(libs.moshi)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(libs.moshi.kotlin)
 
-    implementation(libs.glide.compose)
+    implementation(libs.landscapist.glide)
 
     implementation(libs.koin.core)
     implementation(libs.koin.android)
