@@ -29,7 +29,8 @@ fun BannerScreen(modifier: Modifier = Modifier) {
         items(4) {
             Box(
                 modifier = Modifier
-                    .fillParentMaxSize()
+                    .fillParentMaxWidth(0.9f)
+                    .fillParentMaxHeight()
                     .clip(RoundedCornerShape(10.dp))
                     .paint(
                         painter = painterResource(id = R.drawable.ic_launcher_background),
