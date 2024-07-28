@@ -37,7 +37,7 @@ import com.exfarnanda1945.movietix.home.war_film.presentation.WarFilmScreen
 import org.koin.compose.KoinContext
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(onDetail:(id:Int) -> Unit,modifier: Modifier = Modifier) {
     val scrollState = rememberScrollState()
     KoinContext {
         Scaffold { padding ->
@@ -87,15 +87,15 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                         .clip(RoundedCornerShape(20.dp)),
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-                BannerScreen()
+                BannerScreen(onDetail =onDetail)
                 Spacer(modifier = Modifier.height(10.dp))
                 TopGenreScreen()
                 Spacer(modifier = Modifier.height(15.dp))
-                TopRatedFilmScreen()
+                TopRatedFilmScreen(onDetail = onDetail)
                 Spacer(modifier = Modifier.height(15.dp))
-                IndonesiaFilmScreen("Best Indonesia Film", originCountry = "ID")
+                IndonesiaFilmScreen("Best Indonesia Film", originCountry = "ID",onDetail=onDetail)
                 Spacer(modifier = Modifier.height(15.dp))
-                WarFilmScreen("War", genreId = 10752)
+                WarFilmScreen("War", genreId = 10752,onDetail = onDetail)
             }
         }
     }
@@ -105,5 +105,5 @@ fun HomeScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun HomeScreenPrev() {
-    HomeScreen()
+    HomeScreen({})
 }

@@ -35,6 +35,7 @@ import org.koin.compose.KoinContext
 @Composable
 fun IndonesiaFilmScreen(
     title: String,
+    onDetail: (id: Int) -> Unit,
     modifier: Modifier = Modifier,
     genreId: Int? = null,
     originCountry: String? = null,
@@ -66,7 +67,9 @@ fun IndonesiaFilmScreen(
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
                     (1..4).forEach { index ->
-                        FilmCard(film = state.data[index - 1])
+                        FilmCard(film = state.data[index - 1], onClick = {
+                            onDetail(it)
+                        })
                     }
                 }
             }
@@ -76,9 +79,9 @@ fun IndonesiaFilmScreen(
 }
 
 @Composable
-fun FilmCard(film: DiscoveryFilm, modifier: Modifier = Modifier) {
+fun FilmCard(film: DiscoveryFilm, onClick: (Int) -> Unit, modifier: Modifier = Modifier) {
     Card(
-        onClick = { /*TODO*/ }, modifier = modifier
+        onClick = { onClick(film.movieId) }, modifier = modifier
             .width(180.dp)
             .height(220.dp)
     ) {
@@ -91,7 +94,7 @@ fun FilmCard(film: DiscoveryFilm, modifier: Modifier = Modifier) {
                 imageOptions = ImageOptions(
                     contentScale = ContentScale.FillBounds
                 ),
-                )
+            )
         }
     }
 }
@@ -99,5 +102,5 @@ fun FilmCard(film: DiscoveryFilm, modifier: Modifier = Modifier) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun IndonesiaFilmScreenPreview() {
-    IndonesiaFilmScreen("")
+    IndonesiaFilmScreen(title = "", onDetail = {})
 }

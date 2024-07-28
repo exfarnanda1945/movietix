@@ -7,6 +7,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,7 +34,7 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinContext
 
 @Composable
-fun BannerScreen(modifier: Modifier = Modifier) {
+fun BannerScreen(onDetail: (id: Int) -> Unit, modifier: Modifier = Modifier) {
     val bannerViewModel = koinViewModel<BannerViewModel>()
     val state by bannerViewModel.bannerState.collectAsStateWithLifecycle()
 
@@ -61,6 +62,9 @@ fun BannerScreen(modifier: Modifier = Modifier) {
                             .fillParentMaxWidth(0.9f)
                             .fillParentMaxHeight()
                             .clip(RoundedCornerShape(10.dp))
+                            .clickable {
+                                onDetail(state.data[index].movieId)
+                            }
                     ) {
                         GlideImage(
                             imageModel = { BASE_URL_IMAGE + state.data[index].image },
@@ -81,7 +85,7 @@ fun BannerScreen(modifier: Modifier = Modifier) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun BannerScreenPreview() {
-    BannerScreen()
+    BannerScreen({})
 }
 
 

@@ -1,5 +1,6 @@
 package com.exfarnanda1945.movietix.home.top_rated.presentation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,9 +37,10 @@ import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinContext
+import kotlin.math.round
 
 @Composable
-fun TopRatedFilmScreen(modifier: Modifier = Modifier) {
+fun TopRatedFilmScreen(onDetail: (id: Int) -> Unit, modifier: Modifier = Modifier) {
     val topRatedViewModel = koinViewModel<TopRatedFilmViewModel>()
     val state by topRatedViewModel.topRatedState.collectAsStateWithLifecycle()
 
@@ -61,7 +63,9 @@ fun TopRatedFilmScreen(modifier: Modifier = Modifier) {
                     }
                 } else {
                     items(state.data.size) { index ->
-                        RowCardFilm(item = state.data[index])
+                        RowCardFilm(item = state.data[index], onClick = {
+                            onDetail(it)
+                        })
                     }
                 }
             }
@@ -70,12 +74,15 @@ fun TopRatedFilmScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun RowCardFilm(item: TopRatedFilm, modifier: Modifier = Modifier) {
+fun RowCardFilm(item: TopRatedFilm, onClick: (id: Int) -> Unit, modifier: Modifier = Modifier) {
     Card {
         Column(
             modifier = modifier
                 .height(190.dp)
                 .width(130.dp)
+                .clickable {
+                    onClick(item.movieId)
+                }
         ) {
             GlideImage(
                 imageModel = {
@@ -98,7 +105,7 @@ fun RowCardFilm(item: TopRatedFilm, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxHeight()
                     .padding(start = 5.dp),
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -116,7 +123,10 @@ fun RowCardFilm(item: TopRatedFilm, modifier: Modifier = Modifier) {
                 ) {
                     Icon(imageVector = Icons.Filled.Star, contentDescription = "Like")
                     Spacer(modifier = Modifier.width(5.dp))
-                    Text(text = item.rated.toString(), style = TextStyle(fontSize = 16.sp))
+                    Text(
+                        text = (round(item.rated * 10.0) / 10.0).toString(),
+                        style = TextStyle(fontSize = 16.sp)
+                    )
                 }
             }
 
@@ -128,5 +138,5 @@ fun RowCardFilm(item: TopRatedFilm, modifier: Modifier = Modifier) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun TopRatedFilmScreenPreview() {
-    TopRatedFilmScreen()
+    TopRatedFilmScreen({})
 }
