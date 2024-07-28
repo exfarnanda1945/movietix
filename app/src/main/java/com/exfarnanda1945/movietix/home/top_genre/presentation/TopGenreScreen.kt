@@ -1,9 +1,11 @@
 package com.exfarnanda1945.movietix.home.top_genre.presentation
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -18,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.exfarnanda1945.movietix.home.banner.presentation.ShimmerEffect
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinContext
 
@@ -34,7 +37,15 @@ fun TopGenreScreen(modifier: Modifier = Modifier) {
                 ), modifier = Modifier.padding(start = 10.dp, bottom = 10.dp)
             )
             if (state.isLoading) {
-                Text(text = "Loading...")
+                GenreLoading()
+            } else if (state.errorMsg != null) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp), contentAlignment = Alignment.Center
+                ) {
+                    Text(text = state.errorMsg.toString())
+                }
             } else {
                 val genre = state.data
 
@@ -61,6 +72,51 @@ fun TopGenreScreen(modifier: Modifier = Modifier) {
 
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun GenreLoading(modifier: Modifier = Modifier) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        modifier = Modifier.padding(horizontal = 10.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(horizontal = 10.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            ShimmerEffect(
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            )
+            ShimmerEffect(
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(horizontal = 10.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            ShimmerEffect(
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            )
+            ShimmerEffect(
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            )
         }
     }
 }

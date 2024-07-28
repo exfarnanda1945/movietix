@@ -31,7 +31,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.exfarnanda1945.movietix.R
 import com.exfarnanda1945.movietix.core.Constants.BASE_URL_IMAGE
+import com.exfarnanda1945.movietix.home.banner.presentation.ShimmerEffect
 import com.exfarnanda1945.movietix.home.top_rated.domain.TopRatedFilm
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
@@ -56,12 +58,12 @@ fun TopRatedFilmScreen(onDetail: (id: Int) -> Unit, modifier: Modifier = Modifie
                 )
             )
             Spacer(modifier = Modifier.height(10.dp))
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(15.dp)) {
-                if (state.isLoading) {
-                    item {
-                        Text(text = "Loading")
-                    }
-                } else {
+            if (state.isLoading) {
+                TopGenreLoading()
+            } else if (state.errorMsg != null) {
+                TopGenreError()
+            } else {
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(15.dp)) {
                     items(state.data.size) { index ->
                         RowCardFilm(item = state.data[index], onClick = {
                             onDetail(it)
@@ -69,6 +71,34 @@ fun TopRatedFilmScreen(onDetail: (id: Int) -> Unit, modifier: Modifier = Modifie
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun TopGenreLoading() {
+    LazyRow(horizontalArrangement = Arrangement.spacedBy(15.dp)) {
+        items(6) { _ ->
+            ShimmerEffect(
+                modifier = Modifier
+                    .height(190.dp)
+                    .width(130.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun TopGenreError() {
+    LazyRow(horizontalArrangement = Arrangement.spacedBy(15.dp)) {
+        items(6) { _ ->
+            GlideImage(
+                imageModel = { R.drawable.image_broken }, imageOptions = ImageOptions(
+                    contentScale = ContentScale.FillBounds
+                ), modifier = Modifier
+                    .height(190.dp)
+                    .width(130.dp)
+            )
         }
     }
 }
