@@ -1,5 +1,6 @@
 package com.exfarnanda1945.movietix.detail.presentation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,11 +17,15 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -50,9 +55,9 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinContext
 import kotlin.math.round
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(id: Int, modifier: Modifier = Modifier) {
+fun DetailScreen(id: Int, onBack: () -> Unit, modifier: Modifier = Modifier) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val scrollState = rememberScrollState()
     val detailViewModel = koinViewModel<DetailFilmViewModel>()
@@ -68,161 +73,190 @@ fun DetailScreen(id: Int, modifier: Modifier = Modifier) {
     val videoUrl = getVideoUrl(data.videos)
 
     KoinContext {
-        if (state.isLoading) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    CircularProgressIndicator()
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(text = "Loading...", textAlign = TextAlign.Center)
-                }
-            }
-        } else {
-
-            Column(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .verticalScroll(scrollState)
-            ) {
-                GlideImage(
-                    imageModel = { BASE_URL_IMAGE + data.image }, imageOptions = ImageOptions(
-                        contentScale = ContentScale.FillBounds
-                    ),
-                    modifier = Modifier
-                        .height(450.dp)
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 10.dp),
-                    verticalAlignment = Alignment.Top,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = data.title,
-                        style = TextStyle(
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.SemiBold
-                        ),
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1.5f)
-                    )
-                    Text(
-                        text = "Released\n ${data.releaseDate}", style = TextStyle(
-                            fontSize = 13.sp
-                        ),
-                        modifier = Modifier.weight(0.5f), textAlign = TextAlign.End
-                    )
-                }
-                Spacer(modifier = Modifier.height(5.dp))
-                Text(
-                    text = data.genres.joinToString { it.name },
-                    style = TextStyle(
-                        fontSize = 16.sp
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 10.dp)
-                )
-                Spacer(modifier = Modifier.height(5.dp))
+        Scaffold(topBar = {
+            TopAppBar(title = {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 10.dp)
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    Text(
-                        text = "Rating",
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
-                    Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating")
-                    Text(
-                        text = (round(data.rate * 10.0)/10.0).toString(), style = TextStyle(
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    )
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "",
+                        Modifier.clickable { onBack() })
+                    Text(text = "Detail Film")
                 }
-                Spacer(modifier = Modifier.height(5.dp))
-                Text(
-                    text = data.description,
-                    style = TextStyle(fontSize = 14.sp),
-                    modifier = Modifier.padding(horizontal = 10.dp)
-                )
-
-                Column(
+            })
+        }) { padding ->
+            if (state.isLoading) {
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 10.dp, start = 10.dp, end = 10.dp)
+                        .fillMaxSize()
+                        .padding(padding),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = "Producer", style = TextStyle(
-                            fontSize = 16.sp, fontWeight = FontWeight.SemiBold
-                        )
-                    )
-                    Spacer(modifier = Modifier.height(15.dp))
-                    LazyRow(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        items(data.companies.size) { index ->
-                            GlideImage(
-                                imageModel = { BASE_URL_IMAGE + data.companies[index].logo },
-                                modifier = Modifier
-                                    .width(120.dp)
-                                    .height(30.dp),
-                                imageOptions = ImageOptions(
-                                    contentScale = ContentScale.FillBounds
-                                )
-                            )
-                        }
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        CircularProgressIndicator()
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Text(text = "Loading...", textAlign = TextAlign.Center)
                     }
-
                 }
-
-                Column(
+            } else if (state.errorMsg != null) {
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 20.dp, start = 10.dp, end = 10.dp)
+                        .fillMaxSize()
+                        .padding(padding),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = "Trailer", style = TextStyle(
-                            fontSize = 16.sp, fontWeight = FontWeight.SemiBold
-                        )
+                    Text(text = state.errorMsg.toString(), textAlign = TextAlign.Center)
+                }
+            } else {
+                Column(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .verticalScroll(scrollState)
+                        .padding(padding)
+                ) {
+                    GlideImage(
+                        imageModel = { BASE_URL_IMAGE + data.image }, imageOptions = ImageOptions(
+                            contentScale = ContentScale.FillBounds
+                        ),
+                        modifier = Modifier
+                            .height(450.dp)
                     )
                     Spacer(modifier = Modifier.height(10.dp))
-                    VidePlayer(
-                        url = videoUrl,
-                        lifecycleOwner = lifecycleOwner,
+                    Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(220.dp)
-                    )
-                }
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 15.dp, start = 10.dp, end = 10.dp)
-                ) {
-                    Text(
-                        text = "Images", style = TextStyle(
-                            fontSize = 16.sp, fontWeight = FontWeight.SemiBold
-                        )
-                    )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    FlowRow(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                            .padding(horizontal = 10.dp),
+                        verticalAlignment = Alignment.Top,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        (1..images.size).forEach { index ->
-                            FilmImageCard(images[index - 1])
+                        Text(
+                            text = data.title,
+                            style = TextStyle(
+                                fontSize = 22.sp,
+                                fontWeight = FontWeight.SemiBold
+                            ),
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.weight(1.5f)
+                        )
+                        Text(
+                            text = "Released\n ${data.releaseDate}", style = TextStyle(
+                                fontSize = 13.sp
+                            ),
+                            modifier = Modifier.weight(0.5f), textAlign = TextAlign.End
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(
+                        text = data.genres.joinToString { it.name },
+                        style = TextStyle(
+                            fontSize = 16.sp
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 10.dp)
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 10.dp)
+                    ) {
+                        Text(
+                            text = "Rating",
+                            style = TextStyle(
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Icon(imageVector = Icons.Filled.Star, contentDescription = "Rating")
+                        Text(
+                            text = (round(data.rate * 10.0) / 10.0).toString(), style = TextStyle(
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(5.dp))
+                    Text(
+                        text = data.description,
+                        style = TextStyle(fontSize = 14.sp),
+                        modifier = Modifier.padding(horizontal = 10.dp)
+                    )
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 10.dp, start = 10.dp, end = 10.dp)
+                    ) {
+                        Text(
+                            text = "Producer", style = TextStyle(
+                                fontSize = 16.sp, fontWeight = FontWeight.SemiBold
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(15.dp))
+                        LazyRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+                            items(data.companies.size) { index ->
+                                GlideImage(
+                                    imageModel = { BASE_URL_IMAGE + data.companies[index].logo },
+                                    modifier = Modifier
+                                        .width(120.dp)
+                                        .height(30.dp),
+                                    imageOptions = ImageOptions(
+                                        contentScale = ContentScale.FillBounds
+                                    )
+                                )
+                            }
+                        }
+
+                    }
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp, start = 10.dp, end = 10.dp)
+                    ) {
+                        Text(
+                            text = "Trailer", style = TextStyle(
+                                fontSize = 16.sp, fontWeight = FontWeight.SemiBold
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        VidePlayer(
+                            url = videoUrl,
+                            lifecycleOwner = lifecycleOwner,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(220.dp)
+                        )
+                    }
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 15.dp, start = 10.dp, end = 10.dp)
+                    ) {
+                        Text(
+                            text = "Images", style = TextStyle(
+                                fontSize = 16.sp, fontWeight = FontWeight.SemiBold
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        FlowRow(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            verticalArrangement = Arrangement.spacedBy(10.dp),
+                        ) {
+                            (1..images.size).forEach { index ->
+                                FilmImageCard(images[index - 1])
+                            }
                         }
                     }
                 }
@@ -292,5 +326,5 @@ fun VidePlayer(url: String, lifecycleOwner: LifecycleOwner, modifier: Modifier =
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun DetailSectionScreenPreview() {
-    DetailScreen(1)
+    DetailScreen(1, {})
 }

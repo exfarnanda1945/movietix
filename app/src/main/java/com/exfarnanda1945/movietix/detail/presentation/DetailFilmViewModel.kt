@@ -35,14 +35,14 @@ class DetailFilmViewModel(private val useCase: GetDetailFilmUseCase) : ViewModel
                         is InternalServerError -> "Server Error"
                         is UnExpectedError -> "Unexpected Error"
                         else -> "Error"
-                    }
+                    },
                 )
 
                 is DomainResult.Success -> {
                     _detailState.value = detailState.value.copy(
                         isLoading = false,
-                        data = result.data
-
+                        data = result.data,
+                        errorMsg = null
                     )
                 }
             }
