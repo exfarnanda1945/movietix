@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exfarnanda1945.movietix.home.indonesia.presentation.FilmCard
 import com.exfarnanda1945.movietix.home.indonesia.presentation.IndonesiaFilmScreen
-import com.exfarnanda1945.movietix.home.indonesia.presentation.IndonesiaFilmViewModel
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinContext
 
