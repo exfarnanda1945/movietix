@@ -41,7 +41,7 @@ data class DiscoveryFilmResultsItem(
     val posterPath: String = "",
 
     @Json(name = "backdrop_path")
-    val backdropPath: String = "",
+    val backdropPath: String? = "",
 
     @Json(name = "release_date")
     val releaseDate: String = "",
