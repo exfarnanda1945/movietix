@@ -9,6 +9,7 @@ import com.exfarnanda1945.movietix.home.shared_discovery_film.di.discoveryFilmMo
 import com.exfarnanda1945.movietix.home.top_genre.di.topGenreModule
 import com.exfarnanda1945.movietix.home.top_rated.di.topRatedFilmModule
 import com.exfarnanda1945.movietix.home.war_film.di.warFilmModule
+import com.exfarnanda1945.movietix.search.di.searchFilmModule
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
@@ -25,7 +26,8 @@ class MainApp : Application() {
                 indonesiaFilmModule,
                 warFilmModule,
                 topRatedFilmModule,
-                detailFilmModule
+                detailFilmModule,
+                searchFilmModule
             )
         }
     }
