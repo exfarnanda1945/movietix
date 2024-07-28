@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.exfarnanda1945.movietix.home.HomeScreen
+import androidx.navigation.compose.rememberNavController
+import com.exfarnanda1945.movietix.core.navigation.NavigationGraph
 import com.exfarnanda1945.movietix.ui.theme.MovieTixTheme
 import org.koin.androidx.compose.KoinAndroidContext
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -17,7 +18,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             KoinAndroidContext {
                 MovieTixTheme {
-                    HomeScreen()
+                    val navController = rememberNavController()
+                   NavigationGraph(navHostController = navController)
                 }
             }
         }
