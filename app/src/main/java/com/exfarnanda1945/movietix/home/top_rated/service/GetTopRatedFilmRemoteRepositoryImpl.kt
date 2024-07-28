@@ -5,8 +5,10 @@ import com.exfarnanda1945.movietix.core.repository.repositoryExceptionMapper
 import com.exfarnanda1945.movietix.home.top_rated.repository.GetTopRatedFilmRemoteRepository
 import com.exfarnanda1945.movietix.home.top_rated.repository.TopRatedFilmRemote
 import com.exfarnanda1945.movietix.home.top_rated.repository.TopRatedFilmRemoteResult
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class GetTopRatedFilmRemoteRepositoryImpl(private val service: GetTopRatedFilmService) :
     GetTopRatedFilmRemoteRepository {
@@ -20,7 +22,7 @@ class GetTopRatedFilmRemoteRepositoryImpl(private val service: GetTopRatedFilmSe
             val exception = repositoryExceptionMapper(e, "GetTopRatedFilmRemoteRepositoryImpl")
             emit(RepositoryResult.Failure(exception))
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
     private fun TopRatedFilmResultsItem.toRemoteModel() = TopRatedFilmRemote(
         image = this.posterPath,
