@@ -5,8 +5,10 @@ import com.exfarnanda1945.movietix.core.repository.repositoryExceptionMapper
 import com.exfarnanda1945.movietix.home.shared_discovery_film.repository.DiscoveryFilmRemote
 import com.exfarnanda1945.movietix.home.shared_discovery_film.repository.DiscoveryFilmRemoteResult
 import com.exfarnanda1945.movietix.home.shared_discovery_film.repository.GetDiscoveryFilmRemoteRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 class GetDiscoveryFilmRemoteRepositoryImpl(private val service: GetDiscoveryFilmService) :
     GetDiscoveryFilmRemoteRepository {
@@ -21,7 +23,7 @@ class GetDiscoveryFilmRemoteRepositoryImpl(private val service: GetDiscoveryFilm
                 val exception = repositoryExceptionMapper(e, " GetDiscoveryFilmRemoteRepository ")
                 emit(RepositoryResult.Failure(exception))
             }
-        }
+        }.flowOn(Dispatchers.IO)
 
     private fun DiscoveryFilmResultsItem.toRemoteResult() = DiscoveryFilmRemote(
         title = this.title,

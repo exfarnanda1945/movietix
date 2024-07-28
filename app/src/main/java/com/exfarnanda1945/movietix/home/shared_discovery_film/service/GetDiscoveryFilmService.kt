@@ -4,8 +4,8 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface GetDiscoveryFilmService {
-    @GET("discover/movie/")
-    fun get(
+    @GET("discover/movie")
+   suspend fun get(
         @Query("include_adult") includeAdult: Boolean = false,
         @Query("include_video") includeVideo: Boolean = false,
         @Query("language") language: String = "en-US",
