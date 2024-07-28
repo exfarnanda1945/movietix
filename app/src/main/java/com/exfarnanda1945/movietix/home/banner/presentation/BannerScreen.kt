@@ -22,10 +22,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.exfarnanda1945.movietix.core.Constants.BASE_URL_IMAGE
+import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinContext
@@ -39,7 +41,7 @@ fun BannerScreen(modifier: Modifier = Modifier) {
         LazyRow(
             modifier = modifier
                 .fillMaxWidth()
-                .height(250.dp)
+                .height(290.dp)
                 .padding(10.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
@@ -56,12 +58,15 @@ fun BannerScreen(modifier: Modifier = Modifier) {
                 items(state.data.size) { index ->
                     Box(
                         modifier = Modifier
-                            .fillParentMaxWidth(0.94f)
+                            .fillParentMaxWidth(0.9f)
                             .fillParentMaxHeight()
                             .clip(RoundedCornerShape(10.dp))
                     ) {
                         GlideImage(
                             imageModel = { BASE_URL_IMAGE + state.data[index].image },
+                            imageOptions = ImageOptions(
+                                contentScale = ContentScale.FillBounds
+                            ),
                             loading = {
                                 ShimmerEffect()
                             })
