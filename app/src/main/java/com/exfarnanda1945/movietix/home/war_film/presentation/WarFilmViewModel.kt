@@ -43,14 +43,16 @@ class WarFilmViewModel(private val useCase: GetDiscoveryFilmUseCase) : ViewModel
                             is InternalServerError -> "Server Error"
                             is UnExpectedError -> "Unexpected Error"
                             else -> "Error"
-                        }
+                        },
+                        data = emptyList()
                     )
                 }
 
                 is DomainResult.Success -> {
                     _filmState.value = filmState.value.copy(
                         isLoading = false,
-                        data = result.data.take(4)
+                        data = result.data.take(4),
+                        errorMsg = null
                     )
                 }
             }
