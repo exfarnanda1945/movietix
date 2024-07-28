@@ -30,69 +30,73 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.exfarnanda1945.movietix.R
 import com.exfarnanda1945.movietix.home.banner.presentation.BannerScreen
-import com.exfarnanda1945.movietix.home.shared_discovery_film.presentation.DiscoveryFilmScreen
+import com.exfarnanda1945.movietix.home.indonesia.presentation.IndonesiaFilmScreen
 import com.exfarnanda1945.movietix.home.top_genre.presentation.TopGenreScreen
 import com.exfarnanda1945.movietix.home.top_rated.presentation.TopRatedFilmScreen
+import com.exfarnanda1945.movietix.home.war_film.presentation.WarFilmScreen
+import org.koin.compose.KoinContext
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
     val scrollState = rememberScrollState()
-    Scaffold { padding ->
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(padding)
-                .verticalScroll(scrollState)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 15.dp, end = 15.dp, top = 15.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+    KoinContext {
+        Scaffold { padding ->
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .verticalScroll(scrollState)
             ) {
-                Column {
-                    Text(
-                        text = "Hello, ", style = TextStyle(
-                            fontSize = 18.sp
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 15.dp, end = 15.dp, top = 15.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        Text(
+                            text = "Hello, ", style = TextStyle(
+                                fontSize = 18.sp
+                            )
                         )
-                    )
-                    Spacer(modifier = Modifier.height(3.dp))
-                    Text(
-                        text = "My Name", style = TextStyle(
-                            fontSize = 24.sp
+                        Spacer(modifier = Modifier.height(3.dp))
+                        Text(
+                            text = "My Name", style = TextStyle(
+                                fontSize = 24.sp
+                            )
                         )
+                    }
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_movie),
+                        contentDescription = "Logo",
+                        modifier = Modifier.size(36.dp),
+                        tint = Color.Unspecified
                     )
                 }
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_movie),
-                    contentDescription = "Logo",
-                    modifier = Modifier.size(36.dp),
-                    tint = Color.Unspecified
-                )
-            }
 
-            TextField(
-                value = "",
-                onValueChange = {},
-                leadingIcon = {
-                    Icon(imageVector = Icons.Filled.Search, contentDescription = "search")
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 15.dp, end = 15.dp, top = 15.dp)
-                    .clip(RoundedCornerShape(20.dp)),
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            BannerScreen()
-            Spacer(modifier = Modifier.height(10.dp))
-            TopGenreScreen()
-            Spacer(modifier = Modifier.height(15.dp))
-            TopRatedFilmScreen()
-            Spacer(modifier = Modifier.height(15.dp))
-            DiscoveryFilmScreen("Best Indonesia Film")
-            Spacer(modifier = Modifier.height(15.dp))
-            DiscoveryFilmScreen("Documentary")
+                TextField(
+                    value = "",
+                    onValueChange = {},
+                    leadingIcon = {
+                        Icon(imageVector = Icons.Filled.Search, contentDescription = "search")
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 15.dp, end = 15.dp, top = 15.dp)
+                        .clip(RoundedCornerShape(20.dp)),
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                BannerScreen()
+                Spacer(modifier = Modifier.height(10.dp))
+                TopGenreScreen()
+                Spacer(modifier = Modifier.height(15.dp))
+                TopRatedFilmScreen()
+                Spacer(modifier = Modifier.height(15.dp))
+                IndonesiaFilmScreen("Best Indonesia Film", originCountry = "ID")
+                Spacer(modifier = Modifier.height(15.dp))
+                WarFilmScreen("War", genreId = 10752)
+            }
         }
     }
 
