@@ -27,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.exfarnanda1945.movietix.R
 import com.exfarnanda1945.movietix.core.Constants.BASE_URL_IMAGE
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
@@ -50,6 +51,15 @@ fun BannerScreen(onDetail: (id: Int) -> Unit, modifier: Modifier = Modifier) {
                 items(2) {
                     ShimmerEffect(
                         modifier = Modifier
+                            .fillParentMaxWidth(0.94f)
+                            .fillParentMaxHeight()
+                            .clip(RoundedCornerShape(10.dp))
+                    )
+                }
+            } else if (state.errorMsg != null) {
+                items(2) {
+                    GlideImage(
+                        imageModel = { R.drawable.image_broken }, modifier = Modifier
                             .fillParentMaxWidth(0.94f)
                             .fillParentMaxHeight()
                             .clip(RoundedCornerShape(10.dp))

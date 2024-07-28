@@ -35,6 +35,7 @@ class BannerViewModel(private val useCase: GetBannerUseCase) : ViewModel() {
                 is DomainResult.Error -> {
                     _bannerState.value = bannerState.value.copy(
                         isLoading = false,
+                        data = emptyList(),
                         errorMsg = when (result.exception) {
                             is UnauthorizedError -> "Need Api Key"
                             is ConnectivityError -> "No Internet Connection"
@@ -50,7 +51,8 @@ class BannerViewModel(private val useCase: GetBannerUseCase) : ViewModel() {
                 is DomainResult.Success -> {
                     _bannerState.value = bannerState.value.copy(
                         isLoading = false,
-                        data = result.data.take(6)
+                        data = result.data.take(6),
+                        errorMsg = null
                     )
                 }
             }
