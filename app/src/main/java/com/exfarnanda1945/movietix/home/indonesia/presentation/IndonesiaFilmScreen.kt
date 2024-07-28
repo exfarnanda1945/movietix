@@ -24,7 +24,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.exfarnanda1945.movietix.R
 import com.exfarnanda1945.movietix.core.Constants.BASE_URL_IMAGE
+import com.exfarnanda1945.movietix.home.banner.presentation.ShimmerEffect
 import com.exfarnanda1945.movietix.home.shared_discovery_film.domain.DiscoveryFilm
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
@@ -58,8 +60,10 @@ fun IndonesiaFilmScreen(
                 style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
             )
             Spacer(modifier = Modifier.height(10.dp))
-            if (state.isLoading || state.data.isEmpty()) {
-                Text(text = "Loading...")
+            if (state.isLoading) {
+                IndonesiaFilmLoading()
+            } else if (state.errorMsg != null || state.data.isEmpty()) {
+                IndonesiaFilmError()
             } else {
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
@@ -74,6 +78,44 @@ fun IndonesiaFilmScreen(
                 }
             }
 
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun IndonesiaFilmError() {
+    FlowRow(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        (1..4).forEach { index ->
+            GlideImage(
+                imageModel = {
+                    R.drawable.image_broken
+                }, modifier = Modifier
+                    .width(180.dp)
+                    .height(220.dp)
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun IndonesiaFilmLoading() {
+    FlowRow(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        (1..4).forEach { index ->
+            ShimmerEffect(
+                modifier = Modifier
+                    .width(180.dp)
+                    .height(220.dp)
+            )
         }
     }
 }
