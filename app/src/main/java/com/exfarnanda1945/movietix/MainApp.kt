@@ -2,6 +2,7 @@ package com.exfarnanda1945.movietix
 
 import android.app.Application
 import com.exfarnanda1945.movietix.core.di.httpModule
+import com.exfarnanda1945.movietix.detail.di.detailFilmModule
 import com.exfarnanda1945.movietix.home.banner.di.bannerModule
 import com.exfarnanda1945.movietix.home.indonesia.di.indonesiaFilmModule
 import com.exfarnanda1945.movietix.home.shared_discovery_film.di.discoveryFilmModule
@@ -23,7 +24,8 @@ class MainApp : Application() {
                 discoveryFilmModule,
                 indonesiaFilmModule,
                 warFilmModule,
-                topRatedFilmModule
+                topRatedFilmModule,
+                detailFilmModule
             )
         }
     }
