@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,11 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.exfarnanda1945.movietix.R
-import com.exfarnanda1945.movietix.home.banner.presentation.ShimmerEffect
-import com.exfarnanda1945.movietix.home.indonesia.presentation.FilmCard
-import com.exfarnanda1945.movietix.home.indonesia.presentation.IndonesiaFilmScreen
-import com.skydoves.landscapist.glide.GlideImage
+import com.exfarnanda1945.movietix.home.shared_discovery_film.presentation.FilmCard
+import com.exfarnanda1945.movietix.home.shared_discovery_film.presentation.FilmError
+import com.exfarnanda1945.movietix.home.shared_discovery_film.presentation.FilmLoading
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.KoinContext
 
@@ -56,9 +53,9 @@ fun WarFilmScreen(
             )
             Spacer(modifier = Modifier.height(10.dp))
             if (state.isLoading) {
-                WarFilmLoading()
+                FilmLoading()
             } else if (state.errorMsg != null || state.data.isEmpty()) {
-                WarFilmError()
+                FilmError()
             } else {
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
@@ -77,47 +74,9 @@ fun WarFilmScreen(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun WarFilmError() {
-    FlowRow(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-    ) {
-        (1..4).forEach { index ->
-            GlideImage(
-                imageModel = {
-                    R.drawable.image_broken
-                }, modifier = Modifier
-                    .width(180.dp)
-                    .height(220.dp)
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun WarFilmLoading() {
-    FlowRow(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-    ) {
-        (1..4).forEach { index ->
-            ShimmerEffect(
-                modifier = Modifier
-                    .width(180.dp)
-                    .height(220.dp)
-            )
-        }
-    }
-}
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-private fun IndonesiaFilmScreenPreview() {
-    IndonesiaFilmScreen(title = "", onDetail = {})
+private fun WarFilmScreenPreview() {
+    WarFilmScreen(title = "", onDetail = {})
 }
