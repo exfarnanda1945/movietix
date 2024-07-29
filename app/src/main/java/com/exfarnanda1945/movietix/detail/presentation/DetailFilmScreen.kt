@@ -207,8 +207,8 @@ fun DetailScreen(id: Int, onBack: () -> Unit, modifier: Modifier = Modifier) {
                                 GlideImage(
                                     imageModel = { BASE_URL_IMAGE + data.companies[index].logo },
                                     modifier = Modifier
-                                        .width(120.dp)
-                                        .height(30.dp),
+                                        .width(150.dp)
+                                        .height(60.dp),
                                     imageOptions = ImageOptions(
                                         contentScale = ContentScale.FillBounds
                                     )
@@ -287,8 +287,8 @@ fun getVideoUrl(videos: List<VideoItem>): String {
 @Composable
 fun FilmImageCard(item: String, modifier: Modifier = Modifier) {
     Card(
-        onClick = { /*TODO*/ }, modifier = modifier
-            .width(190.dp)
+        onClick = {}, modifier = modifier
+            .width(180.dp)
             .height(220.dp)
     ) {
         Box(
