@@ -1,6 +1,7 @@
 package com.exfarnanda1945.movietix.ui.theme
 
 import android.app.Activity
+import android.graphics.Color
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -9,7 +10,10 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -46,8 +50,30 @@ fun MovieTixTheme(
             if (darkTheme) dynamicLightColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> LightColorScheme
+        darkTheme -> DarkColorScheme
         else -> LightColorScheme
+    }
+    val view = LocalView.current
+
+    DisposableEffect(darkTheme) {
+        val activity = view.context as Activity
+        activity.window.statusBarColor = if (darkTheme) {
+            Color.TRANSPARENT
+        } else {
+            Color.BLACK
+        }
+        activity.window.navigationBarColor = if (darkTheme) {
+            Color.TRANSPARENT
+        } else {
+            Color.BLACK
+        }
+
+        WindowCompat.getInsetsController(activity.window, activity.window.decorView).apply {
+            isAppearanceLightStatusBars = darkTheme
+            isAppearanceLightNavigationBars = darkTheme
+        }
+
+        onDispose { }
     }
 
     MaterialTheme(
